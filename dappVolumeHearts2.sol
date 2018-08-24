@@ -60,9 +60,10 @@ contract DappVolumeHearts {
 		require(msg.value >= 2000000000000000);
 		require(dapp_id > 0);
 		totals[dapp_id] = totals[dapp_id].add(msg.value);
-		lastAddress = msg.sender;
 		// send 50% of the money to the last person
-		lastAddress.transfer(msg.value.div(2));
+		if (lastAddress.send(msg.value.div(2)) == true) {
+			lastAddress = msg.sender;
+		}
 	}
 
 	// get total hearts by id with legacy contract totaled in
